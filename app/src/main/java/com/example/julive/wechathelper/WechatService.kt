@@ -33,14 +33,14 @@ class WechatService : AccessibilityService() {
         val eventType = event?.eventType
         val className = event?.className
         val config = FileUtil.readLogByString(logPath, "0")
-        log("className==\"$className\"" + "pkgName===$pkgName")
+        log("className==\"$className\"" + "pkgName===$pkgName" + "config==$config")
         when (eventType) {
             AccessibilityEvent.TYPE_WINDOWS_CHANGED -> {
             }
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
                 if (className == "com.miui.securityscan.ui.settings.SettingsActivity") {
-                    click("推荐内容", time = 500L)
-                    click("仅在WLAN下推荐", time = 1500L)
+                    clickForBox("推荐内容", time = 500L)
+                    clickForBox("仅在WLAN下推荐", time = 500L)
                     FileUtil.writeLog(logPath, "1", false, "utf-8")
                 }
                 if (className == "com.android.providers.downloads.ui.DownloadList") {
@@ -52,9 +52,12 @@ class WechatService : AccessibilityService() {
                 }
                 if (className == "com.example.julive.wechathelper.MainActivity") {
                     if (config == "2000") {
-                        click("开始", time = 500L)
+                        clickById("com.example.julive.wechathelper:id/layout")
                         FileUtil.writeLog(logPath, "0", false, "utf-8")
                     }
+                }
+                if(className=="com.example.julive.wechathelper.SettingActivity"){
+
                 }
                 if (className == "com.miui.optimizecenter.settings.SettingsActivity") {
                     FileUtil.writeLog(logPath, "2", false, "utf-8")
@@ -103,7 +106,6 @@ class WechatService : AccessibilityService() {
                     if (nodeInfo == null) {
                         Toast.makeText(this, "rootWindow为空", Toast.LENGTH_SHORT).show()
                     }
-
                     val node = nodeInfo.findAccessibilityNodeInfosByText("下载管理")
                     if (node != null) {
                         val cout = node.count()
@@ -170,9 +172,9 @@ class WechatService : AccessibilityService() {
                     val count = parent.childCount
                     (0 until count).forEach { i ->
                         val child = parent.getChild(i)
-                        logT("child==" + child?.className.toString()+child.isChecked)
-                        if(child?.className=="android.widget.CheckBox"){
-                            if(child.isChecked){
+                        logT("child==" + child?.className.toString() + child.isChecked)
+                        if (child?.className == "android.widget.CheckBox") {
+                            if (child.isChecked) {
                                 child.performAction(action)
                                 child.parent?.performAction(action)
                             }
@@ -180,7 +182,7 @@ class WechatService : AccessibilityService() {
                     }
                 }
             } else {
-                Toast.makeText(this, "click 找不到有效的节点", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "click 找不到有效的节点", Toast.LENGTH_SHORT).show()
             }
             nodeInfo.recycle()
         }, time)
@@ -204,7 +206,7 @@ class WechatService : AccessibilityService() {
                 view.performAction(action)
                 view.parent?.performAction(action)
             } else {
-                Toast.makeText(this, "click 找不到有效的节点", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "click 找不到有效的节点", Toast.LENGTH_SHORT).show()
             }
             nodeInfo.recycle()
         }, time)
@@ -228,7 +230,7 @@ class WechatService : AccessibilityService() {
                 view.performAction(action)
                 view.parent?.performAction(action)
             } else {
-                Toast.makeText(this, "click 找不到有效的节点", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "click 找不到有效的节点", Toast.LENGTH_SHORT).show()
             }
             nodeInfo.recycle()
         }, 1000)
@@ -252,7 +254,7 @@ class WechatService : AccessibilityService() {
                 list[list.size - 1].performAction(action)
                 list[list.size - 1].parent?.performAction(action)
             } else {
-                Toast.makeText(this, "clickById 找不到有效的节点", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "clickById 找不到有效的节点", Toast.LENGTH_SHORT).show()
             }
             nodeInfo.recycle()
         }, 1000)

@@ -3,14 +3,19 @@ package com.example.julive.wechathelper
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
-import com.github.rubensousa.viewpagercards.*
-import org.jetbrains.anko.*
+import com.github.rubensousa.viewpagercards.FileUtil
+import com.github.rubensousa.viewpagercards.log
+import com.github.rubensousa.viewpagercards.logPath
+import com.github.rubensousa.viewpagercards.openAccessSetting
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.backgroundResource
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.yesButton
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
 
@@ -42,7 +47,6 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             requestPermissions()
         else {
             hasPermissions = true
-//            checkPermission()
         }
         val layout = findViewById<LinearLayout>(R.id.layout)
         layout.backgroundResource = R.drawable.bg7
