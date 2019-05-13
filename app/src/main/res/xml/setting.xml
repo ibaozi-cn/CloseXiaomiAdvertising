@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference android:title="@string/title_1" android:summary="@string/text_1" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_2" android:summary="@string/text_2" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_3" android:summary="@string/text_3" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_4" android:summary="@string/text_4" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_5" android:summary="@string/text_5" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_6" android:summary="@string/text_6" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_7" android:summary="@string/text_7" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_8" android:summary="@string/text_8" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_9" android:summary="@string/text_9" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_10" android:summary="@string/text_10" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_11" android:summary="@string/text_11" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_12" android:summary="@string/text_12" android:layout="@layout/adapter"/>
+    <Preference android:title="@string/title_13" android:summary="@string/text_13" android:layout="@layout/adapter"/>
+</PreferenceScreen>
