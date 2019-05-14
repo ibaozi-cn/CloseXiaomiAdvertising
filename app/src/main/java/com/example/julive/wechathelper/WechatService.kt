@@ -16,8 +16,12 @@ import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Toast
+import com.github.rubensousa.viewpagercards.Action
+import com.github.rubensousa.viewpagercards.FactoryClose
 import com.github.rubensousa.viewpagercards.FileUtil
 import com.github.rubensousa.viewpagercards.logPath
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 
 
 class WechatService : AccessibilityService() {
@@ -27,105 +31,176 @@ class WechatService : AccessibilityService() {
     override fun onInterrupt() {
     }
 
+    private fun nextPage(config: String, delay: Long = 1000L) {
+        handler.postDelayed({
+            FactoryClose.closeSet(config, baseContext)
+        }, delay)
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         val pkgName = event?.packageName.toString()
         val eventType = event?.eventType
         val className = event?.className
-        val config = FileUtil.readLogByString(logPath, "0")
+        val config = FileUtil.readLogByString(logPath, Action.Nothing.desc)
         log("className==\"$className\"" + "pkgName===$pkgName" + "config==$config")
         when (eventType) {
             AccessibilityEvent.TYPE_WINDOWS_CHANGED -> {
             }
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
-                if (className == "com.miui.securityscan.ui.settings.SettingsActivity") {
-                    clickForBox("推荐内容", time = 500L)
-                    clickForBox("仅在WLAN下推荐", time = 500L)
-                    FileUtil.writeLog(logPath, "1", false, "utf-8")
+                if (config == Action.Nothing.desc)
+                    return
+                if (config == "1000") {
+                    performBackClick(100)
+                    performBackClick(300)
+                    performBackClick(600)
                 }
-                if (className == "com.android.providers.downloads.ui.DownloadList") {
-                }
-
-                if (className == "com.android.settings.SubSettings") {
-                    if (config == "1000")
-                        backOneFirst()
-                }
-                if (className == "com.example.julive.wechathelper.MainActivity") {
-                    if (config == "2000") {
+                if (config == Action.AutoOpenAppSettings.desc) {
+                    if (className == "com.example.julive.wechathelper.MainActivity") {
                         clickById("com.example.julive.wechathelper:id/layout")
-                        FileUtil.writeLog(logPath, "0", false, "utf-8")
                     }
+                    FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                 }
-                if(className=="com.example.julive.wechathelper.SettingActivity"){
-
+                if (config == Action.AutoOpenSaveCore.desc)
+                    if (className == "com.miui.securityscan.ui.settings.SettingsActivity") {
+                        clickForBox("推荐内容", time = 500L)
+                        clickForBox("仅在WLAN下推荐", time = 500L)
+                        handler.postDelayed({
+                            performBackClick(500)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 1500L)
+                    }
+                if (config == Action.AutoOpenLajiCore.desc)
+                    if (className == "com.miui.optimizecenter.settings.SettingsActivity") {
+                        clickForBox("垃圾清理提醒", time = 500L)
+                        clickForBox("扫描内存", time = 500L)
+                        clickForBox("使用云端扫描", time = 500L)
+                        clickForBox("自动更新清理库", time = 500L)
+                        clickForBox("推荐内容", time = 500L)
+                        clickForBox("仅在WLAN下推荐", time = 500L)
+                        handler.postDelayed({
+                            performBackClick(100)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 1500L)
+                    }
+                if (config == Action.AutoOpenAppManagerSetting.desc)
+                    setAppManager(className.toString())
+                if (config == Action.AutoOpenMarketSetting.desc)
+                    if (className == "com.xiaomi.market.ui.MarketPreferenceActivity") {
+                        clickForBox("自动升级", time = 500L)
+                        clickForBox("更新提醒", time = 500L)
+                        clickForBox("相关推荐", time = 500L)
+                        handler.postDelayed({
+                            performBackClick(100)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 1500L)
+                    }
+                if (config == Action.AutoOpenDownSetting.desc) {
+                    setDownload(className.toString())
                 }
-                if (className == "com.miui.optimizecenter.settings.SettingsActivity") {
-                    FileUtil.writeLog(logPath, "2", false, "utf-8")
-                }
-                if (className == "com.miui.appmanager.AppManagerSettings") {
-                    FileUtil.writeLog(logPath, "3", false, "utf-8")
-                }
-                if (className == "com.xiaomi.market.ui.MarketPreferenceActivity") {
-                    FileUtil.writeLog(logPath, "4", false, "utf-8")
-                }
-                if (className == "com.android.providers.downloads.ui.activity.InfoFlowSettingActivity") {
-                    FileUtil.writeLog(logPath, "5", false, "utf-8")
-                }
-                if (className == "com.miui.video.feature.mine.setting.SettingActivity") {
-                    FileUtil.writeLog(logPath, "6", false, "utf-8")
-                }
-                if (className == "com.miui.player.phone.ui.MusicSettings") {
-                    FileUtil.writeLog(logPath, "7", false, "utf-8")
-                }
-                if (className == "com.android.calendar.settings.UserExperiencePreferencesActivity") {
-                    FileUtil.writeLog(logPath, "8", false, "utf-8")
-                }
-                if (className == "com.miui.weather2.ActivitySet") {
-                    FileUtil.writeLog(logPath, "9", false, "utf-8")
-                }
-                if (className == "com.android.quicksearchbox.preferences.SearchSettingsPreferenceActivity") {
-                    FileUtil.writeLog(logPath, "10", false, "utf-8")
-                }
-                if (className == "com.miui.home.settings.MiuiHomeSettingActivity") {
-                    FileUtil.writeLog(logPath, "11", false, "utf-8")
-                }
-                if (className == "com.sohu.inputmethod.sogou.xiaomi.SogouIMESettings") {
-                    FileUtil.writeLog(logPath, "12", false, "utf-8")
-                }
+                if (config == Action.AutoOpenVideoSetting.desc)
+                    if (className == "com.miui.video.feature.mine.setting.SettingActivity") {
+                        clickForBox("通知栏显示快捷入口", time = 500L)
+                        clickForBox("在线服务", time = 500L)
+                        click("确认关闭", time = 1500L)
+                        handler.postDelayed({
+                            performBackClick(100)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 2500L)
+                    }
+                if (config == Action.AutoOpenMusicSetting.desc)
+                    if (className == "com.miui.player.phone.ui.MusicSettings") {
+                        clickForBox("自动进入播放页", time = 500L)
+                        clickForBox("在线内容服务", time = 500L)
+                        clickForBox("在线K歌直播服务", time = 500L)
+                        click("确认", time = 1500L)
+                        handler.postDelayed({
+                            performBackClick(100)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 2500L)
+                    }
+                if (config == Action.AutoOpenCalendarSetting.desc)
+//                    if (className == "com.android.calendar.settings.UserExperiencePreferencesActivity") {
+                    if (className == "com.android.calendar.settings.CalendarSettingsActivity") {
+                        click("用户体验计划", time = 500)
+                        clickForBox("内容推广", time = 1500L)
+                        clickForBox("功能推荐", time = 1500L)
+                        handler.postDelayed({
+                            performBackClick(100)
+                            performBackClick(300)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 2500L)
+                    }
+                if (config == Action.AutoOpenWeatherSetting.desc)
+                    setWeather(className.toString())
+                if (config == Action.AutoOpenQuickSearchSetting.desc)
+                    if (className == "com.android.quicksearchbox.preferences.SearchSettingsPreferenceActivity") {
+                        clickForBox("热点推荐", time = 500L)
+                        clickForBox("小说频道", time = 500L)
+                        handler.postDelayed({
+                            performBackClick(300)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 1500L)
+                    }
+                if (config == Action.AutoOpenHomeSetting.desc)
+                    if (className == "com.miui.home.settings.MiuiHomeSettingActivity") {
+                        clickForBox("显示内存信息", time = 500L)
+                        handler.postDelayed({
+                            performBackClick(300)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 1500L)
+                    }
+                if (config == Action.AutoOpenSogouSetting.desc)
+                    if (className == "com.sohu.inputmethod.sogou.xiaomi.SogouIMESettings") {
+                        click("输入设置", time = 500)
+                        longToast("请上拉关闭节日活动提醒")
+                        handler.postDelayed({
+//                            performBackClick(300)
+//                            performBackClick(600)
+                            FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+                        }, 1500L)
+                    }
 //                if (className == "com.github.rubensousa.viewpagercards.MainPageActivity") {
 //                    if (config == "12") {
 //                        FileUtil.writeLog(logPath, "0", false, "utf-8")
 //                    }
 //                }
                 if (className == "com.android.settings.Settings\$DevelopmentSettingsDashboardActivity") {
-                    FileUtil.writeLog(logPath, "0", false, "utf-8")
+                    FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                 }
+            }
+        }
+    }
 
-                if (className == "com.android.providers.downloads.ui.DownloadList") {
-                    val nodeInfo = rootInActiveWindow
-                    if (nodeInfo == null) {
-                        Toast.makeText(this, "rootWindow为空", Toast.LENGTH_SHORT).show()
-                    }
-                    val node = nodeInfo.findAccessibilityNodeInfosByText("下载管理")
-                    if (node != null) {
-                        val cout = node.count()
-                        (0 until cout).forEach {
-                            val self = node[it]
-//                            logT("parent==" + self?.className.toString() + self?.text)
-                            if (self != null) {
-                                val parent = self.parent
-                                val count = parent.childCount
-                                (0 until count).forEach { i ->
-                                    val child = parent.getChild(i)
-//                                    logT("child==" + child?.className.toString())
-                                    if (child?.className.toString() == "android.widget.ImageView" && i == 3) {
-                                        child.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                                        click("设置", time = 500L)
-                                        click("信息流设置", time = 1500L)
-                                        clickForBox("仅在WLAN下加载", time = 2500L)
-                                        clickForBox("资源推荐", time = 2500L)
-                                        click("确定", time = 3500L)
-                                    }
+    private fun setWeather(className: String?) {
+//        if (className == "com.miui.weather2.ActivitySet") {
+        if (className == "com.miui.weather2.ActivityWeatherMain") {
+            longToast("抱歉天气还没适配好哦，请您手动操作")
+        }
+    }
+
+    private fun setAppManager(className: String?) {
+        if (className == "com.miui.appmanager.AppManagerMainActivity") {
+            val nodeInfo = rootInActiveWindow
+            if (nodeInfo == null) {
+                Toast.makeText(this, "rootWindow为空", Toast.LENGTH_SHORT).show()
+            }
+            val node = nodeInfo.findAccessibilityNodeInfosByText("应用管理")
+            if (node != null) {
+                val cout = node.count()
+                (0 until cout).forEach {
+                    val self = node[it]
+                    logT("parent==" + self?.className.toString() + self?.text)
+                    if (self != null) {
+                        val parent = self.parent.parent
+                        if (parent != null) {
+                            val count = parent.childCount
+                            (0 until count).forEach { i ->
+                                val child = parent.getChild(i)
+                                logT("child==" + child?.className.toString())
+                                if (child?.className.toString() == "android.widget.Button") {
+                                    child.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                                    click("设置", time = 500L)
                                 }
                             }
                         }
@@ -133,13 +208,56 @@ class WechatService : AccessibilityService() {
                 }
             }
         }
+        if (className == "com.miui.appmanager.AppManagerSettings") {
+            clickForBox("应用升级提醒", time = 500L)
+            clickForBox("资源推荐", time = 500L)
+            handler.postDelayed({
+                performBackClick(100)
+                performBackClick(200)
+                FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+            }, 1500L)
+        }
     }
 
-    private fun backOneFirst() {
-        FileUtil.writeLog(logPath, "2000", false, "utf-8")
-        performBackClick(100)
-        performBackClick(1000)
-        performBackClick(2000)
+    private fun setDownload(className: String) {
+        if (className == "com.android.providers.downloads.ui.DownloadList") {
+            val nodeInfo = rootInActiveWindow
+            if (nodeInfo == null) {
+                Toast.makeText(this, "rootWindow为空", Toast.LENGTH_SHORT).show()
+            }
+            val node = nodeInfo.findAccessibilityNodeInfosByText("下载管理")
+            if (node != null) {
+                val cout = node.count()
+                (0 until cout).forEach {
+                    val self = node[it]
+//                            logT("parent==" + self?.className.toString() + self?.text)
+                    if (self != null) {
+                        val parent = self.parent
+                        val count = parent.childCount
+                        (0 until count).forEach { i ->
+                            val child = parent.getChild(i)
+//                                    logT("child==" + child?.className.toString())
+                            if (child?.className.toString() == "android.widget.ImageView" && i == 3) {
+                                child.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                                click("设置", time = 500L)
+                                click("信息流设置", time = 1500L)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (className == "com.android.providers.downloads.ui.activity.InfoFlowSettingActivity") {
+            clickForBox("仅在WLAN下加载", time = 500L)
+            clickForBox("资源推荐", time = 500L)
+            click("确定", time = 1500L)
+            handler.postDelayed({
+                performBackClick(100)
+                performBackClick(300)
+                performBackClick(600)
+                FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+            }, 2000L)
+        }
     }
 
     /**
@@ -172,7 +290,7 @@ class WechatService : AccessibilityService() {
                     val count = parent.childCount
                     (0 until count).forEach { i ->
                         val child = parent.getChild(i)
-                        logT("child==" + child?.className.toString() + child.isChecked)
+//                        logT("child==" + child?.className.toString() + child.isChecked)
                         if (child?.className == "android.widget.CheckBox") {
                             if (child.isChecked) {
                                 child.performAction(action)

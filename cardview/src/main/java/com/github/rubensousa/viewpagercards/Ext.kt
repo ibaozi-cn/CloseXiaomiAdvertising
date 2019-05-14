@@ -105,6 +105,29 @@ fun Activity.openWechat() {
     }
 }
 
+fun Context.openAppHome() {
+    val WECHAT_PACKAGE_NAME = "com.example.julive.wechathelper"
+//    val UI_LUANCHER = "com.miui.securityscan.MainPageActivity"
+    val UI_SETTING = "com.example.julive.wechathelper.MainActivity"
+    try {
+        val intent = Intent()
+        intent.setClassName(WECHAT_PACKAGE_NAME, UI_SETTING)
+        startActivity(intent)
+    } catch (e: Exception) {
+    }
+}
+fun Context.openAppSetting() {
+    log("openAppSetting=========================================")
+    val WECHAT_PACKAGE_NAME = "com.example.julive.wechathelper"
+//    val UI_LUANCHER = "com.miui.securityscan.MainPageActivity"
+    val UI_SETTING = "com.example.julive.wechathelper.SettingActivity"
+    try {
+        val intent = Intent()
+        intent.setClassName(WECHAT_PACKAGE_NAME, UI_SETTING)
+        startActivity(intent)
+    } catch (e: Exception) {
+    }
+}
 /**
  * 安全中心
  */
@@ -115,6 +138,7 @@ fun Context.openSaveCore() {
     try {
         val intent = Intent()
         intent.setClassName(WECHAT_PACKAGE_NAME, UI_SETTING)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     } catch (e: Exception) {
     }
@@ -129,6 +153,7 @@ fun Context.openLajiCore() {
     try {
         val intent = Intent()
         intent.setClassName(WECHAT_PACKAGE_NAME, LAJI)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     } catch (e: Exception) {
     }

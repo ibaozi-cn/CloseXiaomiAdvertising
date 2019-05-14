@@ -8,10 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
-import com.github.rubensousa.viewpagercards.FileUtil
-import com.github.rubensousa.viewpagercards.log
-import com.github.rubensousa.viewpagercards.logPath
-import com.github.rubensousa.viewpagercards.openAccessSetting
+import com.github.rubensousa.viewpagercards.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.noButton
@@ -37,7 +34,6 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        FileUtil.writeLog(logPath, "0", false, "utf-8")
         if (!EasyPermissions.hasPermissions(
                 this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -51,6 +47,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         val layout = findViewById<LinearLayout>(R.id.layout)
         layout.backgroundResource = R.drawable.bg7
 
+        FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
     }
 
     val bgList = arrayListOf(

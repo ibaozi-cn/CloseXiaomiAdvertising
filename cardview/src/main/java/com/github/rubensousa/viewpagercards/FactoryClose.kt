@@ -16,45 +16,51 @@ import android.content.Context
  */
 object FactoryClose {
 
-
-    fun closeSet(title: String, context: Context) {
-        if (title == "安全中心") {
+    fun closeSet(config: String, context: Context) {
+        log(config)
+        if (config ==  Action.AutoOpenAppHome.desc) {
+            context.openAppHome()
+        }
+        if (config == Action.AutoOpenAppSettings.desc) {
+            context.openAppSetting()
+        }
+        if (config == Action.AutoOpenSaveCore.desc) {
             context.openSaveCore()
         }
-        if (title == "垃圾清理") {
+        if (config == Action.AutoOpenLajiCore.desc) {
             context.openLajiCore()
         }
-        if (title == "应用管理") {
+        if (config == "应用管理") {
             context.openAppManagerSetting()
         }
-        if (title == "应用市场") {
+        if (config == "应用市场") {
             context.openMarketSetting()
         }
-        if (title == "下载信息") {
+        if (config == "下载信息") {
             context.openDownSetting()
         }
-        if (title == "视频") {
+        if (config == "视频") {
             context.openVideoSetting()
         }
-        if (title == "音乐") {
+        if (config == "音乐") {
             context.openMusicSetting()
         }
-        if (title == "8日历") {
+        if (config == "日历") {
             context.openCalendarSetting()
         }
-        if (title == "天气") {
+        if (config == "天气") {
             context.openWeatherSetting()
         }
-        if (title == "快搜索") {
+        if (config == "快搜索") {
             context.openQuickSearchSetting()
         }
-        if (title == "桌面") {
+        if (config == "桌面") {
             context.openHomeSetting()
         }
-        if (title == "搜狗") {
+        if (config == "搜狗") {
             context.openSogouSetting()
         }
-        if (title == "开发者") {
+        if (config == "开发者") {
             context.openAppDevlop()
         }
     }
