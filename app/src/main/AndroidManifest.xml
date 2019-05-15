@@ -73,6 +73,14 @@
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/filepaths"/>
         </provider>
+
+        <activity android:name=".FeedbackActivity">
+        </activity>
+        <activity
+                android:name=".AboutActivity"
+                android:label="@string/title_activity_about"
+                android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

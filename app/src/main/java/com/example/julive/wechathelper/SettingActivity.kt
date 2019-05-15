@@ -53,7 +53,10 @@ class SettingActivity : AppCompatActivity() {
                 }.show()
             }
             if (item.title == "反馈") {
-//                startActivity(intentFor<FeedbackActivity>())
+                startActivity(intentFor<FeedbackActivity>())
+            }
+            if (item.title == "关于") {
+                startActivity(intentFor<AboutActivity>())
             }
             true
         }

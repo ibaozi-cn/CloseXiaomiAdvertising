@@ -59,8 +59,8 @@ class WechatService : AccessibilityService() {
                 if (config == Action.AutoOpenAppSettings.desc) {
                     if (className == "com.example.julive.wechathelper.MainActivity") {
                         clickById("com.example.julive.wechathelper:id/layout")
+                        FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                     }
-                    FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                 }
                 if (config == Action.AutoOpenSaveCore.desc)
                     if (className == "com.miui.securityscan.ui.settings.SettingsActivity") {
@@ -154,7 +154,6 @@ class WechatService : AccessibilityService() {
                 if (config == Action.AutoOpenSogouSetting.desc)
                     if (className == "com.sohu.inputmethod.sogou.xiaomi.SogouIMESettings") {
                         click("输入设置", time = 500)
-                        slideVertical(0,20)
                         longToast("请上拉关闭节日活动提醒")
                         handler.postDelayed({
 //                            performBackClick(300)

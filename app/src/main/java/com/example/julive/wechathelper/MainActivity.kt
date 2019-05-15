@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     val bgList = arrayListOf(
-        R.drawable.bg,
+        R.drawable.bgg,
         R.drawable.bg1,
         R.drawable.bg2,
         R.drawable.bg3,
