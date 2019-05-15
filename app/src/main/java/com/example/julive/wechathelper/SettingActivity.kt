@@ -9,16 +9,11 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem.SHOW_AS_ACTION_ALWAYS
 import android.widget.ListView
 import com.github.rubensousa.viewpagercards.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.toast
-import org.jetbrains.anko.yesButton
+import org.jetbrains.anko.*
 
-var isOpen = false
+private var isAuto = false
 
 class SettingActivity : AppCompatActivity() {
-
-    private var isAuto = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +28,32 @@ class SettingActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         if (isAuto)
-            toolbar.menu.add("开启").setShowAsAction(SHOW_AS_ACTION_ALWAYS)
-        toolbar.menu.add("关于").setShowAsAction(SHOW_AS_ACTION_ALWAYS)
+            toolbar.menu.add("关闭").setShowAsAction(SHOW_AS_ACTION_ALWAYS)
+        toolbar.menu.add("反馈")
+        toolbar.menu.add("关于")
 
-        toolbar.setOnMenuItemClickListener {
-            if (it.title == "开启") {
-                alert(title = "确认开启自动关闭吗？", message = "确定：点击下面任意一项即可免去手动操作，快去试试吧") {
+        toolbar.setOnMenuItemClickListener { item ->
+            if (item.title == "关闭") {
+                alert(message = "确认关闭自动吗") {
                     yesButton {
-                        isOpen = true
+                        isAuto = false
+                        longToast("已关闭")
+                        item.title = "开启"
                     }
-                    noButton {
-                        toast("那你手动吧")
-                        isOpen = false
+
+                }.show()
+            }
+            if (item.title == "开启") {
+                alert(message = "确认开启自动吗") {
+                    yesButton {
+                        isAuto = true
+                        longToast("已开启")
+                        item.title = "关闭"
                     }
                 }.show()
+            }
+            if (item.title == "反馈") {
+//                startActivity(intentFor<FeedbackActivity>())
             }
             true
         }
@@ -66,6 +73,7 @@ class SettingActivity : AppCompatActivity() {
 
 
     class SettingFragment : PreferenceFragment() {
+
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             // 加载xml资源文件
@@ -74,7 +82,7 @@ class SettingActivity : AppCompatActivity() {
 
         override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen?, preference: Preference): Boolean {
             log("preferenceScreen$preference")
-            if (isOpen)
+            if (isAuto)
                 FileUtil.writeLog(logPath, preference.title.toString(), false, "utf-8")
             else
                 FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")

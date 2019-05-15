@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         val layout = findViewById<LinearLayout>(R.id.layout)
         layout.backgroundResource = R.drawable.bg7
 
-        FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
+//        FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
     }
 
     val bgList = arrayListOf(

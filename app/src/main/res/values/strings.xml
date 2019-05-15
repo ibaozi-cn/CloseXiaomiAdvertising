@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">广告剔除助手</string>
     <string name="as_description">小米广告剔除助手</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="action_settings">Settings</string>
 </resources>

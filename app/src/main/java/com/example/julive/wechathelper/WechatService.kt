@@ -51,9 +51,10 @@ class WechatService : AccessibilityService() {
                 if (config == Action.Nothing.desc)
                     return
                 if (config == "1000") {
-                    performBackClick(100)
-                    performBackClick(300)
-                    performBackClick(600)
+                    performBackClick(1000)
+                    performBackClick(2000)
+                    performBackClick(3000)
+                    FileUtil.writeLog(logPath, Action.AutoOpenAppSettings.desc, false, "utf-8")
                 }
                 if (config == Action.AutoOpenAppSettings.desc) {
                     if (className == "com.example.julive.wechathelper.MainActivity") {
@@ -66,7 +67,7 @@ class WechatService : AccessibilityService() {
                         clickForBox("推荐内容", time = 500L)
                         clickForBox("仅在WLAN下推荐", time = 500L)
                         handler.postDelayed({
-                            performBackClick(500)
+                            performBackClick(1000)
                             FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                         }, 1500L)
                     }
@@ -79,7 +80,7 @@ class WechatService : AccessibilityService() {
                         clickForBox("推荐内容", time = 500L)
                         clickForBox("仅在WLAN下推荐", time = 500L)
                         handler.postDelayed({
-                            performBackClick(100)
+                            performBackClick(1000)
                             FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                         }, 1500L)
                     }
@@ -91,7 +92,7 @@ class WechatService : AccessibilityService() {
                         clickForBox("更新提醒", time = 500L)
                         clickForBox("相关推荐", time = 500L)
                         handler.postDelayed({
-                            performBackClick(100)
+                            performBackClick(1000)
                             FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                         }, 1500L)
                     }
@@ -104,7 +105,7 @@ class WechatService : AccessibilityService() {
                         clickForBox("在线服务", time = 500L)
                         click("确认关闭", time = 1500L)
                         handler.postDelayed({
-                            performBackClick(100)
+                            performBackClick(1000)
                             FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                         }, 2500L)
                     }
@@ -115,7 +116,7 @@ class WechatService : AccessibilityService() {
                         clickForBox("在线K歌直播服务", time = 500L)
                         click("确认", time = 1500L)
                         handler.postDelayed({
-                            performBackClick(100)
+                            performBackClick(1000)
                             FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                         }, 2500L)
                     }
@@ -126,8 +127,8 @@ class WechatService : AccessibilityService() {
                         clickForBox("内容推广", time = 1500L)
                         clickForBox("功能推荐", time = 1500L)
                         handler.postDelayed({
-                            performBackClick(100)
-                            performBackClick(300)
+                            performBackClick(1000)
+                            performBackClick(2000)
                             FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                         }, 2500L)
                     }
@@ -138,7 +139,7 @@ class WechatService : AccessibilityService() {
                         clickForBox("热点推荐", time = 500L)
                         clickForBox("小说频道", time = 500L)
                         handler.postDelayed({
-                            performBackClick(300)
+                            performBackClick(1000)
                             FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                         }, 1500L)
                     }
@@ -146,13 +147,14 @@ class WechatService : AccessibilityService() {
                     if (className == "com.miui.home.settings.MiuiHomeSettingActivity") {
                         clickForBox("显示内存信息", time = 500L)
                         handler.postDelayed({
-                            performBackClick(300)
+                            performBackClick(1000)
                             FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                         }, 1500L)
                     }
                 if (config == Action.AutoOpenSogouSetting.desc)
                     if (className == "com.sohu.inputmethod.sogou.xiaomi.SogouIMESettings") {
                         click("输入设置", time = 500)
+                        slideVertical(0,20)
                         longToast("请上拉关闭节日活动提醒")
                         handler.postDelayed({
 //                            performBackClick(300)
@@ -166,6 +168,8 @@ class WechatService : AccessibilityService() {
 //                    }
 //                }
                 if (className == "com.android.settings.Settings\$DevelopmentSettingsDashboardActivity") {
+                    clickForBox("系统自动更新", time = 500L)
+                    performBackClick(1000)
                     FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                 }
             }
