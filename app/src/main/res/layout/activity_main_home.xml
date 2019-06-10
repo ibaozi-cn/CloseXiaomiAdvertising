@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
+        android:id="@+id/container"
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent"
-        tools:context=".SettingActivity">
+        tools:context=".MainHomeActivity">
 
     <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
@@ -24,13 +26,21 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-            android:id="@+id/fragment"
+    <RelativeLayout
+            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
-            android:orientation="vertical">
-    </LinearLayout>
+            android:text="@string/title_home"
+            android:layout_below="@+id/appBarLayout"
+            android:layout_above="@+id/navigation"
+    />
 
+    <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/navigation" app:layout_constraintHorizontal_bias="0.0"/>
 
-</LinearLayout>
+</RelativeLayout>
