@@ -98,4 +98,36 @@
     <string name="title_home">我的</string>
     <string name="title_dashboard">Ai小哆</string>
     <string name="title_notifications">通知</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_1">安全中心</string>
+    <string name="title_2">垃圾清理</string>
+    <string name="title_3">应用管理</string>
+    <string name="title_4">应用市场</string>
+    <string name="title_5">下载信息</string>
+    <string name="title_6">视频</string>
+    <string name="title_7">音乐</string>
+    <string name="title_8">日历</string>
+    <string name="title_9">天气</string>
+    <string name="title_10">快搜索</string>
+    <string name="title_11">桌面</string>
+    <string name="title_12">搜狗</string>
+    <string name="title_13">开发者</string>
+
+    <string name="text_1">咨询内容-关闭\n仅在WLAN下推荐-关闭</string>
+    <string name="text_2">咨询内容-关闭\n仅在WLAN下推荐-关闭</string>
+    <string name="text_3">应用升级提醒-关闭\n资源推荐-关闭</string>
+    <string name="text_4">相关推荐-关闭\n自动升级-关闭\n更新提醒-关闭</string>
+    <string name="text_5">资源推荐-关闭</string>
+    <string name="text_6">在线服务-关闭\n通知栏显示快捷入口-关闭\n消息设置-未读消息提醒-关闭</string>
+    <string name="text_7">在线内容服务-关闭\n在线K歌直播服务-关闭</string>
+    <string name="text_8">用户体验计划\n内容推广-关闭\n功能推荐-关闭</string>
+    <string name="text_9">天气咨询-关闭</string>
+    <string name="text_10">桌面搜索框-关闭\n热点推荐-关闭\n小说频道-关闭</string>
+    <string name="text_11">桌面信息助手-关闭(这个不是所有人都关，可以自行选择)</string>
+    <string name="text_12">节日活动提醒-关闭</string>
+    <string name="text_13">打开开发者选项界面</string>
+
 </resources>

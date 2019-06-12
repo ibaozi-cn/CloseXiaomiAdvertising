@@ -1,15 +1,12 @@
 @file:Suppress("DEPRECATION")
 
-package com.github.rubensousa.viewpagercards
+package com.example.julive.wechathelper.ext
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.KeyguardManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.PowerManager
 import android.provider.Settings
 import android.support.annotation.RequiresApi
 import android.widget.Toast
@@ -117,7 +114,7 @@ fun Context.openAppHome() {
     }
 }
 fun Context.openAppSetting() {
-    log("openAppSetting=========================================")
+    com.example.julive.wechathelper.util.log("openAppSetting=========================================")
     val WECHAT_PACKAGE_NAME = "com.example.julive.wechathelper"
 //    val UI_LUANCHER = "com.miui.securityscan.MainPageActivity"
     val UI_SETTING = "com.example.julive.wechathelper.SettingActivity"

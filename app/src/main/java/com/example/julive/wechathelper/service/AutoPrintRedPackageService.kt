@@ -1,4 +1,4 @@
-package com.example.julive.wechathelper
+package com.example.julive.wechathelper.service
 
 import android.accessibilityservice.AccessibilityService
 import android.annotation.SuppressLint
@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import com.example.julive.wechathelper.ext.log
 
 class AutoPrintRedPackageService : AccessibilityService() {
 
@@ -116,7 +117,10 @@ class AutoPrintRedPackageService : AccessibilityService() {
                                     val total = array[0]
                                     val count = total.replace("领取", "").replace("已", "").toInt()
                                     val size = (count + 16) / 8
-                                    log("childDetail", "ACTION_SCROLL_FORWARD size====$size")
+                                    log(
+                                        "childDetail",
+                                        "ACTION_SCROLL_FORWARD size====$size"
+                                    )
                                     child.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
                                     child.performAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD)
 
@@ -125,7 +129,10 @@ class AutoPrintRedPackageService : AccessibilityService() {
                                         val array = text.split("个")
                                         val total = array[0].toInt()
                                         val size = (total + 16) / 8
-                                        log("childDetail", "ACTION_SCROLL_FORWARD size====$size")
+                                        log(
+                                            "childDetail",
+                                            "ACTION_SCROLL_FORWARD size====$size"
+                                        )
                                         child.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
                                         child.performAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD)
                                     }

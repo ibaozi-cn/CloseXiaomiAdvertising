@@ -1,4 +1,4 @@
-package com.example.julive.wechathelper
+package com.example.julive.wechathelper.home
 
 import android.os.Bundle
 import android.preference.Preference
@@ -6,10 +6,17 @@ import android.preference.PreferenceFragment
 import android.preference.PreferenceScreen
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.ListView
-import com.github.rubensousa.viewpagercards.*
+import com.example.julive.wechathelper.about.AboutActivity
+import com.example.julive.wechathelper.fb.FeedbackActivity
+import com.example.julive.wechathelper.R
+import com.example.julive.wechathelper.ext.isAccessibilityServiceSettingEnabled
+import com.example.julive.wechathelper.ext.openAccessSetting
+import com.example.julive.wechathelper.util.Action
+import com.example.julive.wechathelper.util.FactoryClose
+import com.example.julive.wechathelper.util.FileUtil
+import com.example.julive.wechathelper.util.logPath
 
 import kotlinx.android.synthetic.main.activity_main_home.*
 import org.jetbrains.anko.*
@@ -100,7 +107,6 @@ class MainHomeActivity : AppCompatActivity() {
         }
 
     }
-
     class SettingFragment : PreferenceFragment() {
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,14 +118,14 @@ class MainHomeActivity : AppCompatActivity() {
         override fun onResume() {
             super.onResume()
             view?.findViewById<ListView>(android.R.id.list)?.let {
-                log("divider   dividerHeight")
+                com.example.julive.wechathelper.util.log("divider   dividerHeight")
                 it.divider = null
                 it.dividerHeight = 0
             }
         }
 
         override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen?, preference: Preference): Boolean {
-            com.github.rubensousa.viewpagercards.log("preferenceScreen$preference")
+            com.example.julive.wechathelper.util.log("preferenceScreen$preference")
             if (isAuto)
                 FileUtil.writeLog(logPath, preference.title.toString(), false, "utf-8")
             else

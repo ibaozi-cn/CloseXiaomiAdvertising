@@ -1,4 +1,4 @@
-package com.example.julive.wechathelper
+package com.example.julive.wechathelper.service
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.GestureDescription
@@ -16,15 +16,14 @@ import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Toast
-import com.github.rubensousa.viewpagercards.Action
-import com.github.rubensousa.viewpagercards.FactoryClose
-import com.github.rubensousa.viewpagercards.FileUtil
-import com.github.rubensousa.viewpagercards.logPath
+import com.example.julive.wechathelper.util.Action
+import com.example.julive.wechathelper.util.FactoryClose
+import com.example.julive.wechathelper.util.FileUtil
+import com.example.julive.wechathelper.util.logPath
 import org.jetbrains.anko.longToast
-import org.jetbrains.anko.toast
 
 
-class WechatService : AccessibilityService() {
+class AutoCloseXmAdvertisementService : AccessibilityService() {
 
     private val handler = Handler()
 
@@ -57,7 +56,7 @@ class WechatService : AccessibilityService() {
                     FileUtil.writeLog(logPath, Action.AutoOpenAppSettings.desc, false, "utf-8")
                 }
                 if (config == Action.AutoOpenAppSettings.desc) {
-                    if (className == "com.example.julive.wechathelper.MainActivity") {
+                    if (className == "com.example.julive.wechathelper.lunch.MainActivity") {
                         clickById("com.example.julive.wechathelper:id/layout")
                         FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
                     }

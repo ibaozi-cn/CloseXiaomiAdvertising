@@ -1,17 +1,13 @@
-package com.example.julive.wechathelper
+package com.example.julive.wechathelper.lunch
 
 import android.Manifest
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
 import android.view.View
 import android.widget.LinearLayout
-import com.github.rubensousa.viewpagercards.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import com.example.julive.wechathelper.R
+import com.example.julive.wechathelper.home.MainHomeActivity
 import org.jetbrains.anko.*
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
@@ -20,13 +16,13 @@ import java.util.*
 class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        log("onPermissionsDenied" + perms.toString())
+        com.example.julive.wechathelper.util.log("onPermissionsDenied" + perms.toString())
         hasPermissions = false
         this.finish()
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        log("onPermissionsGranted" + perms.toString())
+        com.example.julive.wechathelper.util.log("onPermissionsGranted" + perms.toString())
         hasPermissions = true
     }
 
@@ -52,7 +48,6 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     val bgList = arrayListOf(
-        R.drawable.bgg,
         R.drawable.bg1,
         R.drawable.bg2,
         R.drawable.bg3,

@@ -1,4 +1,4 @@
-package com.example.julive.wechathelper
+package com.example.julive.wechathelper.ext
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import com.example.julive.wechathelper.service.AutoCloseXmAdvertisementService
 
 private val handler = Handler()
 
@@ -112,7 +113,7 @@ fun Boolean.isSuccess(success: () -> Unit, fail: (() -> Unit)? = null) {
 
 
 fun Context.isAccessibilityServiceSettingEnabled(): Boolean {
-    val service = packageName + "/" + WechatService::class.java.canonicalName
+    val service = packageName + "/" + AutoCloseXmAdvertisementService::class.java.canonicalName
     val accessibilityEnabled = Settings.Secure.getInt(contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED, 0)
     if (accessibilityEnabled != 1)
         return false

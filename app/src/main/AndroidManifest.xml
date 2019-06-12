@@ -39,7 +39,7 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".MainActivity"
+                android:name=".lunch.MainActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme">
             <intent-filter>
@@ -53,7 +53,7 @@
                 android:theme="@style/BaseTheme"/>
 
         <service
-                android:name=".WechatService"
+                android:name=".service.AutoCloseXmAdvertisementService"
                 android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService"/>
@@ -74,16 +74,16 @@
                     android:resource="@xml/filepaths"/>
         </provider>
 
-        <activity android:name=".FeedbackActivity">
+        <activity android:name=".fb.FeedbackActivity">
         </activity>
         <activity
-                android:name=".AboutActivity"
+                android:name=".about.AboutActivity"
                 android:label="@string/title_activity_about"
                 android:theme="@style/AppTheme">
         </activity>
 
         <service
-                android:name=".AutoPrintRedPackageService"
+                android:name=".service.AutoPrintRedPackageService"
                 android:label="@string/accessibility_service_label"
                 android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
@@ -96,8 +96,10 @@
         </service>
 
         <activity
-                android:name=".MainHomeActivity"
+                android:name=".home.MainHomeActivity"
                 android:label="@string/title_activity_main_home">
+        </activity>
+        <activity android:name=".xm.XmActivity">
         </activity>
     </application>
 

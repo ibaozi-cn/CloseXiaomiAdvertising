@@ -1,6 +1,7 @@
-package com.github.rubensousa.viewpagercards
+package com.example.julive.wechathelper.util
 
 import android.content.Context
+import com.example.julive.wechathelper.ext.*
 
 /**
  *

@@ -6,7 +6,7 @@
         android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:gravity="center"
         android:orientation="vertical"
-        tools:context=".FeedbackActivity">
+        tools:context=".fb.FeedbackActivity">
 
     <ImageView
             android:layout_gravity="center"

@@ -1,4 +1,4 @@
-package com.github.rubensousa.viewpagercards
+package com.example.julive.wechathelper.util
 
 import android.os.Environment
 

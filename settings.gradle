@@ -1,1 +1,1 @@
-include ':app',':cardview'
+include ':app'
