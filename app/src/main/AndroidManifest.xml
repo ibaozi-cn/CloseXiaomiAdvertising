@@ -30,6 +30,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+
     <application
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
@@ -48,12 +50,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".SettingActivity"
-                android:theme="@style/BaseTheme"/>
-
         <service
                 android:name=".service.AutoCloseXmAdvertisementService"
+                android:label="@string/as_description"
                 android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService"/>
@@ -78,29 +77,40 @@
         </activity>
         <activity
                 android:name=".about.AboutActivity"
-                android:label="@string/title_activity_about"
                 android:theme="@style/AppTheme">
         </activity>
 
-        <service
-                android:name=".service.AutoPrintRedPackageService"
-                android:label="@string/accessibility_service_label"
-                android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+        <service android:name=".service.ControllerService"
+                 android:label="@string/controller_description"
+                 android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService"/>
+                <action android:name="android.intent.action.Controller"/>
             </intent-filter>
 
             <meta-data
                     android:name="android.accessibilityservice"
-                    android:resource="@xml/wechatz_auto_open_service_config"/>
+                    android:resource="@xml/controller_service_config"/>
+
         </service>
+        <service android:name=".service.OpenAppService"/>
 
         <activity
                 android:name=".home.MainHomeActivity"
+                android:launchMode="singleTask"
                 android:label="@string/title_activity_main_home">
         </activity>
         <activity android:name=".xm.XmActivity">
         </activity>
+        <receiver android:name=".service.ShellReceiver"
+                  android:enabled="true"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="com.julive.esa.shell.receiver" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.os.Message
+import com.topjohnwu.superuser.Shell
 
 class ApplicationXm : Application() {
 
@@ -24,6 +25,9 @@ class ApplicationXm : Application() {
             handlerThread.start()
             headSetWatchHandler.sendEmptyMessageDelayed(1, 2000)
         }
+        Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR)
+        Shell.Config.verboseLogging(BuildConfig.DEBUG)
+        Shell.Config.setTimeout(10)
     }
 
     override fun onTerminate() {

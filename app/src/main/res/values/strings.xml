@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">Ai小哆助手</string>
     <string name="as_description">小米广告剔除助手</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_about">AboutActivity</string>
-    <string name="red_package_description">自动识别红包哦</string>
-    <string name="accessibility_service_label">红包识别助手</string>
+    <string name="controller_description">小哆帮你操作手机</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

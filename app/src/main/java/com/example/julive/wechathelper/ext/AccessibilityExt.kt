@@ -1,5 +1,6 @@
 package com.example.julive.wechathelper.ext
 
+import android.accessibilityservice.AccessibilityService
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
@@ -35,6 +36,19 @@ fun AccessibilityNodeInfo.clickParent(millis: Long = 1000, func: ((isSuccess: Bo
     }, millis)
 }
 
+fun AccessibilityNodeInfo.forward(millis: Long = 2000, func: ((Boolean) -> Unit)? = null) {
+    handler.postDelayed({
+        func?.invoke(performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD))
+    }, millis)
+}
+
+fun AccessibilityNodeInfo.backward(millis: Long = 1000, func: (() -> Unit)? = null) {
+    handler.postDelayed({
+        performAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD)
+        func?.invoke()
+    }, millis)
+}
+
 fun AccessibilityNodeInfo.findByText(text: String = "", index: Int = 0): AccessibilityNodeInfo? {
     return try {
         val list = findAccessibilityNodeInfosByText(text)
@@ -56,13 +70,14 @@ fun AccessibilityNodeInfo.findById(id: String = "", index: Int = 0): Accessibili
 }
 
 fun AccessibilityNodeInfo.printAllChild() {
-    (0 until childCount).forEach { it ->
+    (0 until childCount).forEach {
         val child = getChild(it)
         log(
+            "printAllChild",
             content =
             "className${child?.className} viewIdResourceName${child?.viewIdResourceName} text${child?.text} childCount${child?.childCount} contentDescription${child?.contentDescription}"
         )
-        child.printAllChild()
+        child?.printAllChild()
     }
 }
 
@@ -128,4 +143,75 @@ fun Context.isAccessibilityServiceSettingEnabled(): Boolean {
         }
     }
     return false
+}
+
+const val AutoPrintRedPackageService =
+    "com.example.julive.wechathelper/com.example.julive.wechathelper.service.AutoPrintRedPackageService"
+
+const val ControllerService =
+    "com.example.julive.wechathelper/com.example.julive.wechathelper.service.ControllerService"
+
+fun Context.isAccessibilityServiceEnabled(serviceName: String = AutoPrintRedPackageService): Boolean {
+//    val accessibilityEnabled = Settings.Secure.getInt(contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED, 0)
+//    logD("isAccessibilityServiceSettingEnabled", "accessibilityEnabled $accessibilityEnabled")
+//    if (accessibilityEnabled != 1)
+//        return false
+    val mStringColonSplitter = TextUtils.SimpleStringSplitter(':')
+    val settingValue = Settings.Secure.getString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
+    mStringColonSplitter.setString(settingValue)
+    while (mStringColonSplitter.hasNext()) {
+        val accessibilityService = mStringColonSplitter.next()
+        if (accessibilityService.equals(serviceName, ignoreCase = true)) {
+            log("isAccessibilityServiceEnabled", "true")
+            return true
+        }
+    }
+    log("isAccessibilityServiceEnabled", "false")
+    return false
+}
+
+/**
+ * 开启无障碍服务
+ */
+fun Context.startAccessibilityService(serviceName: String = ControllerService) {
+    if (!isAccessibilityServiceEnabled(serviceName)) {
+        Settings.Secure.putString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, serviceName)
+        Settings.Secure.putInt(contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED, 1)
+        log(
+            "isAccessibilityServiceEnabled",
+            "ACCESSIBILITY_ENABLED=========================================$serviceName 开启中"
+        )
+    } else {
+        log(
+            "isAccessibilityServiceEnabled",
+            "ACCESSIBILITY_ENABLED========================================$serviceName  已开启"
+        )
+    }
+}
+
+/**
+ * 点击回退按钮
+ */
+fun AccessibilityService.performBackClick(func: ((isSuccess: Boolean) -> Unit)? = null) {
+    handler.postDelayed({
+        func?.invoke(performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK))
+    }, 1300L)
+}
+
+/**
+ * 回主页
+ */
+fun AccessibilityService.performHomeClick(func: ((isSuccess: Boolean) -> Unit)? = null) {
+    handler.postDelayed({
+        func?.invoke(performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME))
+    }, 1300L)
+}
+
+/**
+ * 点击菜单按钮
+ */
+fun AccessibilityService.performMenuClick(func: ((isSuccess: Boolean) -> Unit)? = null) {
+    handler.postDelayed({
+        func?.invoke(performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS))
+    }, 1300L)
 }

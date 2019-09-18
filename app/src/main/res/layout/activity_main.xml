@@ -5,7 +5,7 @@
               android:onClick="check"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/bg6"
+              android:background="@drawable/bg7"
               tools:context=".lunch.MainActivity">
 
     <TextView

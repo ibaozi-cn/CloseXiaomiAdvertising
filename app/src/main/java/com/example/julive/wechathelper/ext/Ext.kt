@@ -1,16 +1,21 @@
-@file:Suppress("DEPRECATION")
-
 package com.example.julive.wechathelper.ext
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.KeyguardManager
 import android.content.ComponentName
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.net.Uri
 import android.os.Build
+import android.os.PowerManager
+import android.provider.MediaStore
 import android.provider.Settings
 import android.support.annotation.RequiresApi
 import android.widget.Toast
-
+import java.io.File
 
 
 /**
@@ -86,7 +91,7 @@ fun Activity.openWechatScan() {
     }
 }
 
-fun Activity.openWechat() {
+fun Context.openWechat() {
     val WECHAT_PACKAGE_NAME = "com.tencent.mm"
     val UI_LUANCHER = "$WECHAT_PACKAGE_NAME.ui.LauncherUI"
     try {
@@ -113,6 +118,7 @@ fun Context.openAppHome() {
     } catch (e: Exception) {
     }
 }
+
 fun Context.openAppSetting() {
     com.example.julive.wechathelper.util.log("openAppSetting=========================================")
     val WECHAT_PACKAGE_NAME = "com.example.julive.wechathelper"
@@ -125,6 +131,7 @@ fun Context.openAppSetting() {
     } catch (e: Exception) {
     }
 }
+
 /**
  * 安全中心
  */
@@ -297,3 +304,65 @@ fun Context.openSogouSetting() {
 }
 
 
+@SuppressLint("InvalidWakeLockTag")
+fun Context.wakeUpAndUnlock() {
+    // 获取电源管理器对象
+    val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+    val screenOn = pm.isScreenOn
+    if (!screenOn) {
+        // 获取PowerManager.WakeLock对象,后面的参数|表示同时传入两个值,最后的是LogCat里用的Tag
+        val wl = pm.newWakeLock(
+            PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "bright"
+        )
+        wl.acquire(10000) // 点亮屏幕
+        wl.release() // 释放
+    }
+    // 屏幕解锁
+    val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+    val keyguardLock = keyguardManager.newKeyguardLock("unLock")
+    // 屏幕锁定
+    keyguardLock.reenableKeyguard()
+    keyguardLock.disableKeyguard() // 解锁
+}
+
+fun Context.getImageContentUri(file: File): Uri? {
+    if (!file.exists()) return null
+    val filePath = file.absolutePath
+    val cursor = contentResolver.query(
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        arrayOf(MediaStore.Images.Media._ID),
+        MediaStore.Images.Media.DATA + "=? ",
+        arrayOf(filePath),
+        null
+    )
+    var uri: Uri? = null
+    cursor?.let {
+        if (cursor.moveToFirst()) {
+            val id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID))
+            val baseUri = Uri.parse("content://media/external/images/media")
+            uri = Uri.withAppendedPath(baseUri, "" + id)
+            return uri
+        }
+    }
+    cursor?.close()
+    if (uri == null) {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.DATA, filePath)
+        uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+    }
+    return uri
+}
+
+fun Context.sharePictureToTimeLine(file: File) {
+    val intent = Intent()
+    val comp = ComponentName(
+        "com.tencent.mm",
+        "com.tencent.mm.ui.tools.ShareToTimeLineUI"
+    )
+    intent.component = comp
+    intent.action = Intent.ACTION_SEND
+    intent.type = "image/*"
+    intent.flags = FLAG_ACTIVITY_NEW_TASK
+    intent.putExtra(Intent.EXTRA_STREAM, getImageContentUri(file))
+    startActivity(intent)
+}

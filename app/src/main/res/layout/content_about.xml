@@ -81,6 +81,19 @@
 
                 <TextView
                         android:textSize="18dp"
+                        android:text="V1.2 \n  1. 新增主页导航 \n  2. 新增控制小米手机功能"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <View android:layout_width="match_parent"
+                      android:layout_marginTop="8dp"
+                      android:layout_marginBottom="8dp"
+                      android:background="#e8e8e8"
+                      android:layout_height="1dp"/>
+
+                <TextView
+                        android:textSize="18dp"
                         android:text="V1.1 \n  1. 新增启动页 \n  2. 添加自动配置开关 \n  3. 添加反馈页 \n  4. 添加关于"
                         android:textColor="@color/colorPrimary"
                         android:layout_width="wrap_content"
